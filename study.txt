@@ -1,0 +1,11 @@
+this is for installing project:
+npx create-expo-app --template blank goal-app
+cd my-app
+npm run android
+
+In this we cant work with html element because mobile phone which not have DOM
+ex:
+div->View
+input->TextInput
+button -> <Button title='Tap me'/> is a self clossig and title is a name
+
