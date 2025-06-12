@@ -1,67 +1,59 @@
 import { useState } from 'react';
-import { View, Text, Button,StyleSheet, TextInput, ScrollView ,FlatList} from 'react-native';
-import GoalItem from './components/GoalItem'
-export default function MyForm() {
+import { View, FlatList, StyleSheet } from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
+export default function App() {
+  const [goal, setGoal] = useState('');
+  const [allGoal, setAllGoal] = useState([]);
 
-  const[goal,setGoal]=useState('');
-  const[allGoal,setAllGOal]=useState([])
-
-  function goalInputHandler(text){
-    setGoal(text)
+  function goalInputHandler(text) {
+    setGoal(text);
   }
 
+  function addGoalHandler() {
+    if (goal.trim().length === 0) {
+      return alert('Please enter a goal');
+    }
+    setAllGoal((prevGoals) => [...prevGoals, goal]);
+    setGoal('');
+  }
 
-  function addGoalHandler(){
-    // if(goal.length==0){
-    //   return alert("enter any text")
-    // }
-    setAllGOal((allGoal)=>[...allGoal,goal]);
+  function handleDelete(indexToDelete) {
+    setAllGoal((prevGoals) =>
+      prevGoals.filter((_, index) => index !== indexToDelete)
+    );
   }
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput placeholder='Enter your goal' style={styles.textInput} onChangeText={goalInputHandler}/>
-        <Button 
-        title='Add Goal'
-        onPress={addGoalHandler}
-        />      
-      </View>
+      <GoalInput
+        onGoalChange={goalInputHandler}
+        onAddGoal={addGoalHandler}
+        goal={goal}
+      />
+
       <View style={styles.goalContainer}>
-        <FlatList data={allGoal} 
-        keyExtractor={(item,index)=>index.toString()}
-        renderItem={({item})=>(
-          <GoalItem item={item} />
-        )}
+        <FlatList
+          data={allGoal}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <GoalItem item={item} handleDelete={() => handleDelete(index)} />
+          )}
         />
       </View>
     </View>
   );
 }
 
-const styles=StyleSheet.create({
-    appContainer:{
-      flex:1,
-      padding:50,
-      paddingHorizontal:16
-    },
-    inputContainer:{
-      flexDirection:'row',
-      gap:10,
-      justifyContent:'center',
-      alignItems:'center',
-      paddingBottom:24,
-      borderBottomWidth:1,
-      borderBottomColor:'#cccccc'
-    },
-    textInput:{
-      borderWidth:1,
-      borderColor:'#cccccc',
-      width:'70%'      
-    },
-    goalContainer:{
-      flex:3,
-      marginTop:10,
-    },
-})
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    padding: 50,
+    paddingHorizontal: 16,
+  },
+  goalContainer: {
+    flex: 3,
+    marginTop: 10,
+  },
+});
