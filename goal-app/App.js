@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, Button,StyleSheet, TextInput, ScrollView ,FlatList} from 'react-native';
-
+import GoalItem from './components/GoalItem'
 export default function MyForm() {
 
 
@@ -32,9 +32,7 @@ export default function MyForm() {
         <FlatList data={allGoal} 
         keyExtractor={(item,index)=>index.toString()}
         renderItem={({item})=>(
-        <View style={styles.goalItem}>
-            <Text style={styles.textStyling}>{item}</Text>
-      </View>
+          <GoalItem item={item} />
         )}
         />
       </View>
@@ -66,14 +64,4 @@ const styles=StyleSheet.create({
       flex:3,
       marginTop:10,
     },
-    goalItem:{
-      padding:10,
-      margin:2,
-      borderRadius:6,
-      backgroundColor:"#5e0acc",
-      color:'white'
-    },
-    textStyling:{
-      color:'white'
-    }
 })
