@@ -1,15 +1,36 @@
+import { useState } from 'react';
 import { View, Text, Button,StyleSheet, TextInput } from 'react-native';
-import React from 'react';
 
 export default function MyForm() {
+
+
+  const[goal,setGoal]=useState('');
+  const[allGoal,setAllGOal]=useState([])
+
+  function goalInputHandler(text){
+    setGoal(text)
+  }
+
+
+  function addGoalHandler(){
+    if(goal.length==0){
+      return alert("enter any text")
+    }
+    console.log(goal);
+    setAllGOal((allGoal)=>[...allGoal,goal]);
+  }
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder='Enter your goal' style={styles.textInput}/>
-        <Button title='Add Goal'
-/>      </View>
+        <TextInput placeholder='Enter your goal' style={styles.textInput} onChangeText={goalInputHandler}/>
+        <Button 
+        title='Add Goal'
+        onPress={addGoalHandler}
+        />      
+      </View>
       <View style={styles.goalContainer}>
-        <Text>List of goals...</Text>
+        {allGoal.map((value,index)=>(<Text >{value}</Text>))}
       </View>
     </View>
   );
@@ -17,11 +38,11 @@ export default function MyForm() {
 
 const styles=StyleSheet.create({
     appContainer:{
+      flex:1,
       padding:50,
       paddingHorizontal:16
     },
     inputContainer:{
-      flex:1,
       flexDirection:'row',
       gap:10,
       justifyContent:'center',
@@ -36,7 +57,7 @@ const styles=StyleSheet.create({
       width:'70%'      
     },
     goalContainer:{
+      flex:3,
       marginTop:10,
-      flex:3
     }
 })

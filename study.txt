@@ -8,4 +8,7 @@ ex:
 div->View
 input->TextInput
 button -> <Button title='Tap me'/> is a self clossig and title is a name
+input ->TextInput
+onClick->onPress
+onChange->onChangeText
 
