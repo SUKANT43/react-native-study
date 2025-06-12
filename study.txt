@@ -12,3 +12,20 @@ input ->TextInput
 onClick->onPress
 onChange->onChangeText
 
+for styling the ios we need extra wraapper
+      <View style={styles.goalContainer}>
+        {allGoal.map((value,index)=>(<View key={index} style={styles.goalItem}>
+          <Text>{value}</Text>
+        </View>))}
+
+
+scrollView not optimized but the flatList is optimized 
+        <FlatList data={allGoal}  -->getting a data
+        keyExtractor={(item,index)=>index.toString()}-->extract the data
+        renderItem={({item})=>( --->use the extrcted item
+        <View style={styles.goalItem}>
+            <Text style={styles.textStyling}>{item}</Text>
+      </View>
+        )}
+        />
+

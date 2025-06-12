@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Button,StyleSheet, TextInput } from 'react-native';
+import { View, Text, Button,StyleSheet, TextInput, ScrollView ,FlatList} from 'react-native';
 
 export default function MyForm() {
 
@@ -13,10 +13,9 @@ export default function MyForm() {
 
 
   function addGoalHandler(){
-    if(goal.length==0){
-      return alert("enter any text")
-    }
-    console.log(goal);
+    // if(goal.length==0){
+    //   return alert("enter any text")
+    // }
     setAllGOal((allGoal)=>[...allGoal,goal]);
   }
 
@@ -30,7 +29,14 @@ export default function MyForm() {
         />      
       </View>
       <View style={styles.goalContainer}>
-        {allGoal.map((value,index)=>(<Text >{value}</Text>))}
+        <FlatList data={allGoal} 
+        keyExtractor={(item,index)=>index.toString()}
+        renderItem={({item})=>(
+        <View style={styles.goalItem}>
+            <Text style={styles.textStyling}>{item}</Text>
+      </View>
+        )}
+        />
       </View>
     </View>
   );
@@ -59,5 +65,15 @@ const styles=StyleSheet.create({
     goalContainer:{
       flex:3,
       marginTop:10,
+    },
+    goalItem:{
+      padding:10,
+      margin:2,
+      borderRadius:6,
+      backgroundColor:"#5e0acc",
+      color:'white'
+    },
+    textStyling:{
+      color:'white'
     }
 })
